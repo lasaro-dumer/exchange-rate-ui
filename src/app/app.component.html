@@ -1,0 +1,18 @@
+<nav class="navbar" [class.mat-elevation-z8]="true">
+  <div>
+    <button aria-hidden="false" mat-icon-button routerLink="/">
+      <mat-icon style="color: white">
+        <i class="material-icons md-32">arrow_back</i>
+      </mat-icon>
+    </button>
+    <span style="padding-left: 8px; color: white">Titulo</span>
+  </div>
+  <button aria-hidden="false" mat-button class="button" routerLink="/quote">
+    <span style="padding-left: 8px">Quote</span>
+  </button>
+  <button aria-hidden="false" mat-button class="button" routerLink="/purchase">
+    <span style="padding-left: 8px">Purchase</span>
+  </button>
+</nav>
+
+<router-outlet></router-outlet>
