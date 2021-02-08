@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  title = 'exchange-ui';
+  title = 'Exchange App';
+  clicked = 'quote'
 }

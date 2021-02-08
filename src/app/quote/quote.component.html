@@ -1,2 +1,23 @@
 <p>quote works!</p>
 <mat-spinner *ngIf="showProgressSpinner"></mat-spinner>
+<table *ngIf="!showProgressSpinner">
+  <thead>
+    <tr>
+      <th>Rate Id</th>
+      <th>Currency Code</th>
+      <th>Effective Date</th>
+      <th>Buy Value</th>
+      <th>Sell Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let quote of quotes; let i = index">
+        <td>{{i}}-{{quote.RateId}}</td>
+        <td>{{quote.CurrencyCode}}</td>
+        <td>{{quote.EffectiveDate}}</td>
+        <td>{{quote.BuyValue}}</td>
+        <td>{{quote.SellValue}}</td>
+    </tr>
+  </tbody>
+</table>
+{{quotes}}
