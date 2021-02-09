@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CurrencyExchangeModel } from '../interfaces/quote.model';
 
 @Component({
   selector: 'app-purchase',
@@ -6,8 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./purchase.component.sass']
 })
 export class PurchaseComponent implements OnInit {
+  
+  model = new CurrencyExchangeModel();
 
-  constructor() { }
+  constructor() {
+    //this.currencyExchange={ };
+  }
 
   ngOnInit(): void {
   }

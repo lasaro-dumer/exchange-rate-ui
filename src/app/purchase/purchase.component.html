@@ -1,1 +1,31 @@
-<p>purchase works!</p>
+<div class="purchase-form">
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>User Id</mat-label>
+      <input matInput placeholder="1234" [(ngModel)]="model.userId" />
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Foreign Currency Code</mat-label>
+      <input matInput placeholder="ABC" />
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Direction</mat-label>
+      <input matInput placeholder="Buy" />
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Local Currency Amount</mat-label>
+      <input matInput placeholder="1234" />
+    </mat-form-field>
+  </p>
+  <p>
+    <button aria-hidden="false" mat-flat-button class="button submit-purchase" [ngClass]="'mat-primary'">
+      <span style="padding-left: 8px">Submit</span>
+    </button>
+  </p>
+</div>
