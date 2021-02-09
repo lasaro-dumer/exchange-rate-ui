@@ -1,23 +1,39 @@
-<p>quote works!</p>
 <mat-spinner *ngIf="showProgressSpinner"></mat-spinner>
-<table *ngIf="!showProgressSpinner">
-  <thead>
-    <tr>
-      <th>Rate Id</th>
-      <th>Currency Code</th>
-      <th>Effective Date</th>
-      <th>Buy Value</th>
-      <th>Sell Value</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let quote of quotes; let i = index">
-        <td>{{i}}-{{quote.RateId}}</td>
-        <td>{{quote.CurrencyCode}}</td>
-        <td>{{quote.EffectiveDate}}</td>
-        <td>{{quote.BuyValue}}</td>
-        <td>{{quote.SellValue}}</td>
-    </tr>
-  </tbody>
-</table>
-{{quotes}}
+<mat-grid-list *ngIf="!showProgressSpinner" cols="1" rowHeight="100px">
+  <mat-grid-tile>
+    <button aria-hidden="false" mat-flat-button class="button refresh-quotes" [ngClass]="'mat-primary'" (click)="this.refreshQuotes()">
+      <span style="padding-left: 8px">Refresh Quotes</span>
+    </button>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <table mat-table [dataSource]="quotesDataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="RateId">
+        <th mat-header-cell *matHeaderCellDef>Rate Id</th>
+        <td mat-cell *matCellDef="let quote">{{ quote.rateId }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="CurrencyCode">
+        <th mat-header-cell *matHeaderCellDef>Currency Code</th>
+        <td mat-cell *matCellDef="let quote">{{ quote.currencyCode }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="EffectiveDate">
+        <th mat-header-cell *matHeaderCellDef>Effective Date</th>
+        <td mat-cell *matCellDef="let quote">{{ quote.effectiveDate | date: "MM/dd/yyyy" }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="BuyValue">
+        <th mat-header-cell *matHeaderCellDef>Quote</th>
+        <td mat-cell *matCellDef="let quote">{{ quote.buyValue | number: "1.5-5" }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="SellValue">
+        <th mat-header-cell *matHeaderCellDef>Sell Value</th>
+        <td mat-cell *matCellDef="let quote">{{ quote.sellValue | number: "1.5-5" }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let quoteRow; columns: columnsToDisplay"></tr>
+    </table>
+  </mat-grid-tile>
+</mat-grid-list>
