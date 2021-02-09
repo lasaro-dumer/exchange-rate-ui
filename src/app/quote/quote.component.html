@@ -1,11 +1,13 @@
 <mat-spinner *ngIf="showProgressSpinner"></mat-spinner>
 <mat-grid-list *ngIf="!showProgressSpinner" cols="1" rowHeight="100px">
   <mat-grid-tile>
-    <button aria-hidden="false" mat-flat-button class="button refresh-quotes" [ngClass]="'mat-primary'" (click)="this.refreshQuotes()">
-      <span style="padding-left: 8px">Refresh Quotes</span>
-    </button>
+    <div class="button-wrapper">
+      <button aria-hidden="false" mat-flat-button class="button refresh-quotes" [ngClass]="'mat-primary'" (click)="this.refreshQuotes()">
+        <span style="padding-left: 8px">Refresh Quotes</span>
+      </button>
+    </div>
   </mat-grid-tile>
-  <mat-grid-tile>
+  <mat-grid-tile class="quotes-tile">
     <table mat-table [dataSource]="quotesDataSource" class="mat-elevation-z8">
       <ng-container matColumnDef="RateId">
         <th mat-header-cell *matHeaderCellDef>Rate Id</th>

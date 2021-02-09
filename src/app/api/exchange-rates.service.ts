@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-import { Quote } from '../interfaces/quote.model';
+import { IQuote, IRefreshResultModel } from '../interfaces/quote.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +14,20 @@ export class ExchangeRatesService {
     this.baseUrl = 'https://localhost:5001';
   }
 
-  getQuotes(date: Date): Observable<Quote[]> {
+  getLatestQuotes(date: Date): Observable<IQuote[]> {
     const options = date ?
       {
         params: new HttpParams().set('date', date.toJSON())
       } : {};
 
-    return this.http.get<Quote[]>(`${this.baseUrl}/quotes/all`, options)
+    return this.http.get<IQuote[]>(`${this.baseUrl}/quotes/latest`, options)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  postRefreshQuotes(): Observable<IRefreshResultModel> {
+    return this.http.post<IRefreshResultModel>(`${this.baseUrl}/quotes/refresh`, {})
       .pipe(
         catchError(this.handleError)
       );

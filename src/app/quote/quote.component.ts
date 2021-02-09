@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Observable } from 'rxjs';
+import { CompletionObserver, Observable } from 'rxjs';
 import { ExchangeRatesService } from '../api/exchange-rates.service';
-import { Quote } from '../interfaces/quote.model';
+import { IQuote, IRefreshResultModel } from '../interfaces/quote.model';
 
 @Component({
   selector: 'app-quote',
@@ -12,13 +12,13 @@ import { Quote } from '../interfaces/quote.model';
 
 export class QuoteComponent implements OnInit {
   public showProgressSpinner: boolean;
-  public quotes: Quote[] = [];
-  public quotesDataSource: MatTableDataSource<Quote>;
+  public quotes: IQuote[] = [];
+  public quotesDataSource: MatTableDataSource<IQuote>;
   columnsToDisplay: string[];
 
   constructor(private exchgRateApi: ExchangeRatesService) {
     this.showProgressSpinner = true;
-    this.columnsToDisplay = ['CurrencyCode','EffectiveDate','BuyValue'];
+    this.columnsToDisplay = ['CurrencyCode', 'EffectiveDate', 'BuyValue'];
     this.quotesDataSource = new MatTableDataSource(this.quotes);
   }
 
@@ -27,8 +27,8 @@ export class QuoteComponent implements OnInit {
   }
 
   loadQuotes() {
-    this.exchgRateApi.getQuotes(new Date(Date.now()))
-      .subscribe((data: Array<Quote>) => {
+    this.exchgRateApi.getLatestQuotes(new Date(Date.now()))
+      .subscribe((data: Array<IQuote>) => {
         console.log('received: ', data);
         this.quotes = data;
         this.quotesDataSource = new MatTableDataSource(this.quotes);
@@ -36,9 +36,13 @@ export class QuoteComponent implements OnInit {
       });
   }
 
-  refreshQuotes(){
+  refreshQuotes() {
     this.showProgressSpinner = true;
-    console.log('refreshing');
-    this.showProgressSpinner = false;
+
+    this.exchgRateApi.postRefreshQuotes()
+      .subscribe((x: IRefreshResultModel) => {
+        this.loadQuotes();
+        this.showProgressSpinner = false;
+      });
   }
 }
