@@ -13,6 +13,7 @@ export class PurchaseComponent implements OnInit {
   public currencyExchangeForm = this.newForm();
   public state: String;
   public latestTransaction = new CurrencyExchangeTransactionModel();
+  error: any;
 
   constructor(private exchgRateApi: ExchangeRatesService,
               private formBuilder: FormBuilder,
@@ -50,12 +51,17 @@ export class PurchaseComponent implements OnInit {
     console.log('data', this.currencyExchangeForm.get("userId"));
 
     this.exchgRateApi.postSubmitPurchase(model)
-      .subscribe((x: CurrencyExchangeTransactionModel) => {
-        console.log('Purchased', x);
-        this.latestTransaction = x;
-        this.state = 'done';
-        console.log('state', this.state);
-        this.currencyExchangeForm = this.newForm();
-      });
+      .subscribe(
+        (x: CurrencyExchangeTransactionModel) => {
+          console.log('Purchased', x);
+          this.latestTransaction = x;
+          this.state = 'done';
+          console.log('state', this.state);
+          this.currencyExchangeForm = this.newForm();
+        },
+        (error: any) => {
+          this.state = 'failed';
+          this.error = error;
+        });
   }
 }

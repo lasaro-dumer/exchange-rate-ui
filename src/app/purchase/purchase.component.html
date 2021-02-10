@@ -63,16 +63,27 @@
       </p>
     </mat-card-content>
     <mat-card-actions>
-      <button
-        aria-hidden="false"
-        mat-raised-button
-        class="button"
-        (click)="state = 'ready'"
-        [ngClass]="'mat-primary'"
-      >
+      <button aria-hidden="false" mat-raised-button class="button" (click)="state = 'ready'" [ngClass]="'mat-primary'">
         <span style="padding-left: 8px">New Purchase</span>
       </button>
       <button mat-button routerLink="/transactions">See transactions history</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+<div *ngIf="state === 'failed'">
+  <mat-card class="purchase-done">
+    <mat-card-header>
+      <mat-card-title [ngClass]="'mat-warn'">Purchase failed!</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Your purchase failed with the error: <strong>{{ error }}</strong>
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button aria-hidden="false" mat-raised-button class="button" (click)="state = 'ready'" [ngClass]="'mat-primary'">
+        <span style="padding-left: 8px">Back to Purchase</span>
+      </button>
     </mat-card-actions>
   </mat-card>
 </div>
