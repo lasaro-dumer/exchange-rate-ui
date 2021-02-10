@@ -4,8 +4,8 @@ FROM nginx:1.16.0-alpine
 # copy artifact build from the 'build environment'
 COPY dist /usr/share/nginx/html
 
-# expose port 80
-EXPOSE 80
+# expose port
+EXPOSE $PORT
 
 # run nginx
 CMD ["nginx", "-g", "daemon off;"]
