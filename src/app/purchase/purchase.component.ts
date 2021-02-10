@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ExchangeRatesService } from '../api/exchange-rates.service';
 import { CurrencyExchangeModel, CurrencyExchangeTransactionModel } from '../interfaces/quote.model';
 
@@ -14,7 +15,8 @@ export class PurchaseComponent implements OnInit {
   public latestTransaction = new CurrencyExchangeTransactionModel();
 
   constructor(private exchgRateApi: ExchangeRatesService,
-    private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              public router: Router) {
     this.state = 'ready';
     this.currencyExchangeForm = this.newForm();
     console.log('state', this.state);

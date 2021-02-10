@@ -27,6 +27,13 @@ export class ExchangeRatesService {
       );
   }
 
+  getTransactions(): Observable<CurrencyExchangeTransactionModel[]> {
+    return this.http.get<CurrencyExchangeTransactionModel[]>(`${this.baseUrl}/transactions`, {})
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   postRefreshQuotes(): Observable<IRefreshResultModel> {
     return this.http.post<IRefreshResultModel>(`${this.baseUrl}/quotes/refresh`, {})
       .pipe(

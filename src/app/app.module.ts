@@ -43,12 +43,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { TransactionsComponent } from './transactions/transactions.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     QuoteComponent,
-    PurchaseComponent
+    PurchaseComponent,
+    TransactionsComponent
   ],
   imports: [
     BrowserModule,

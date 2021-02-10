@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from "@angular/forms";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +10,6 @@ import { FormBuilder, Validators } from "@angular/forms";
 export class AppComponent {
   title = 'Exchange App';
   clicked = 'quote';
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,
+              public router: Router) { }
 }

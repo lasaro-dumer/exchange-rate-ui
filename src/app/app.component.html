@@ -7,11 +7,14 @@
     </button>
     <span style="padding-left: 8px; color: white">Titulo</span>
   </div>
-  <button aria-hidden="false" mat-raised-button class="button" routerLink="/quote" [ngClass]="{'mat-accent': clicked === 'quote'}" (click)="clicked='quote'">
+  <button aria-hidden="false" mat-raised-button class="button" routerLink="/quote" [ngClass]="{'mat-accent': router.url === '/quote'}">
     <span style="padding-left: 8px">Quote</span>
   </button>
-  <button aria-hidden="false" mat-raised-button class="button" routerLink="/purchase" [ngClass]="{'mat-accent': clicked === 'purchase'}" (click)="clicked='purchase'">
+  <button aria-hidden="false" mat-raised-button class="button" routerLink="/purchase" [ngClass]="{'mat-accent': router.url === '/purchase'}">
     <span style="padding-left: 8px">Purchase</span>
+  </button>
+  <button aria-hidden="false" mat-raised-button class="button" routerLink="/transactions" [ngClass]="{'mat-accent': router.url === '/transactions'}">
+    <span style="padding-left: 8px">Transactions</span>
   </button>
 </nav>
 
