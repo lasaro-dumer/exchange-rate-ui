@@ -1,31 +1,78 @@
-<div class="purchase-form">
-  <p>
-    <mat-form-field appearance="outline">
+<form *ngIf="state === 'ready'" class="purchase-form form-horizontal" [formGroup]="currencyExchangeForm" (submit)="submitForm()">
+  
+  <div>
+    <!-- User Id -->
+    <mat-form-field>
       <mat-label>User Id</mat-label>
-      <input matInput placeholder="1234" [(ngModel)]="model.userId" />
+      <input type="text" matInput formControlName="userId" placeholder="12345"/>
+      <mat-error *ngIf="currencyExchangeForm.get('userId')?.hasError('required')">
+        User Id is <strong>required</strong>
+      </mat-error>
     </mat-form-field>
-  </p>
-  <p>
-    <mat-form-field appearance="outline">
+  </div>
+  <div>
+    <!-- Foreign Currency Code -->
+    <mat-form-field>
       <mat-label>Foreign Currency Code</mat-label>
-      <input matInput placeholder="ABC" />
+      <input type="text" matInput formControlName="foreignCurrencyCode" placeholder="ABC"/>
+      <mat-error *ngIf="currencyExchangeForm.get('foreignCurrencyCode')?.hasError('required')">
+        Foreign Currency Code is <strong>required</strong>
+      </mat-error>
     </mat-form-field>
-  </p>
-  <p>
-    <mat-form-field appearance="outline">
+  </div>
+  <div>
+    <!-- Direction -->
+    <mat-form-field>
       <mat-label>Direction</mat-label>
-      <input matInput placeholder="Buy" />
+      <mat-select>
+        <mat-option value="0" selected>Buy</mat-option>
+        <mat-option value="1" disabled>Sell</mat-option>
+      </mat-select>
     </mat-form-field>
-  </p>
-  <p>
-    <mat-form-field appearance="outline">
+  </div>
+  <div>
+    <!-- Local Currency Amount -->
+    <mat-form-field>
       <mat-label>Local Currency Amount</mat-label>
-      <input matInput placeholder="1234" />
+      <input type="text" matInput formControlName="localCurrencyAmount" placeholder="12345"/>
+      <mat-error *ngIf="currencyExchangeForm.get('localCurrencyAmount')?.hasError('required')">
+        Local Currency Amount is <strong>required</strong>
+      </mat-error>
     </mat-form-field>
-  </p>
-  <p>
-    <button aria-hidden="false" mat-flat-button class="button submit-purchase" [ngClass]="'mat-primary'">
+  </div>
+  <div>
+    <button aria-hidden="false" [disabled]="!currencyExchangeForm.valid" mat-flat-button color="primary" type="submit" class="button submit-purchase" [ngClass]="'mat-primary'">
       <span style="padding-left: 8px">Submit</span>
     </button>
-  </p>
+  </div>
+</form>
+
+<mat-spinner *ngIf="state === 'processing'">
+  <span>Processing...</span>
+</mat-spinner>
+<div *ngIf="state === 'done'">
+  <mat-card class="purchase-done">
+    <mat-card-header>
+      <mat-card-title>Purchase successful!</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Your purchase of
+        {{ $any(latestTransaction)!.foreignCurrencyAmount | number: "1.5-5" }}
+        {{ latestTransaction.foreignCurrencyCode }} was completed.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button
+        aria-hidden="false"
+        mat-raised-button
+        class="button"
+        (click)="state = 'ready'"
+        [ngClass]="'mat-primary'"
+      >
+        <span style="padding-left: 8px">New Purchase</span>
+      </button>
+      <button mat-button>See transactions history</button>
+    </mat-card-actions>
+  </mat-card>
 </div>

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-import { IQuote, IRefreshResultModel } from '../interfaces/quote.model';
+import { CurrencyExchangeModel, CurrencyExchangeTransactionModel, IQuote, IRefreshResultModel } from '../interfaces/quote.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,8 @@ export class ExchangeRatesService {
   private baseUrl: String;
 
   constructor(private http: HttpClient) {
-    this.baseUrl = 'https://localhost:5001';
+    //this.baseUrl = 'https://localhost:5001';
+    this.baseUrl = 'https://lasaro-exchange-rate-api.herokuapp.com';
   }
 
   getLatestQuotes(date: Date): Observable<IQuote[]> {
@@ -28,6 +29,13 @@ export class ExchangeRatesService {
 
   postRefreshQuotes(): Observable<IRefreshResultModel> {
     return this.http.post<IRefreshResultModel>(`${this.baseUrl}/quotes/refresh`, {})
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  postSubmitPurchase(purchase: CurrencyExchangeModel): Observable<CurrencyExchangeTransactionModel> {
+    return this.http.post<CurrencyExchangeTransactionModel>(`${this.baseUrl}/currency/exchange/transaction`, purchase, {})
       .pipe(
         catchError(this.handleError)
       );
