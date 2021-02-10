@@ -8,8 +8,19 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
       - uses: actions/checkout@master
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm install -g @angular/cli@11.1.4
+      - run: ng build --prod
       - uses: akhileshns/heroku-deploy@v3.10.9 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
